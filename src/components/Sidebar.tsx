@@ -1,5 +1,5 @@
 
-import { FileText, FolderOpen, Search, Git, DebugIcon } from 'lucide-react';
+import { FileText, FolderOpen, Search, GitBranch, Bug } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface SidebarProps {
@@ -12,8 +12,8 @@ const Sidebar = ({ activeView, onViewChange, isExpanded }: SidebarProps) => {
   const sidebarItems = [
     { id: 'explorer', icon: <FileText size={24} />, title: 'Explorer' },
     { id: 'search', icon: <Search size={24} />, title: 'Search' },
-    { id: 'git', icon: <Git size={24} />, title: 'Source Control' },
-    { id: 'debug', icon: <DebugIcon size={24} />, title: 'Run and Debug' },
+    { id: 'git', icon: <GitBranch size={24} />, title: 'Source Control' },
+    { id: 'debug', icon: <Bug size={24} />, title: 'Run and Debug' },
   ];
   
   return (
