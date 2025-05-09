@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				vscode: {
+					'bg': '#1e1e1e',
+					'sidebar': '#252526',
+					'editor': '#1e1e1e',
+					'terminal': '#1e1e1e',
+					'highlight': '#264f78',
+					'active-tab': '#1e1e1e',
+					'inactive-tab': '#2d2d2d'
 				}
 			},
 			borderRadius: {
@@ -84,11 +94,16 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'cursor-blink': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'cursor-blink': 'cursor-blink 1s step-end infinite'
 			}
 		}
 	},
