@@ -26,7 +26,15 @@ const Sidebar = ({ activeView, onViewChange, isExpanded, onOpenInCodespace }: Si
         title: `Launching in ${platform}`,
         description: "Opening your project in a full cloud development environment...",
       });
-      onOpenInCodespace();
+      
+      // Update URLs based on the platform
+      if (platform === "GitHub Codespaces") {
+        window.open('https://github.dev/codespaces', '_blank');
+      } else if (platform === "Gitpod") {
+        window.open('https://gitpod.io/#https://github.com/your-org/your-repo', '_blank');
+      } else {
+        onOpenInCodespace();
+      }
     }
   };
   

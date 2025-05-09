@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { toast } from '@/hooks/use-toast';
 
@@ -10,7 +9,7 @@ const Terminal = ({ initialText = 'Welcome to VSCode Cloud Terminal' }: Terminal
   const [history, setHistory] = useState<string[]>([
     initialText,
     'NOTE: For full terminal functionality, please use the "Launch VS Code" button in the sidebar.',
-    'This will open a complete cloud development environment with terminal access.'
+    'This will open a complete cloud development environment with terminal access via GitHub Codespaces or Gitpod.'
   ]);
   const [input, setInput] = useState('');
   const [prompt, setPrompt] = useState('$ ');
@@ -40,7 +39,7 @@ const Terminal = ({ initialText = 'Welcome to VSCode Cloud Terminal' }: Terminal
           setInput('');
           return;
         } else if (command === 'help') {
-          response = 'Available commands: help, clear, echo, ls, pwd\n\nFor full terminal functionality, launch a complete development environment.';
+          response = 'Available commands: help, clear, echo, ls, pwd\n\nFor full terminal functionality, launch GitHub Codespaces or Gitpod from the Development Environments tab.';
         } else if (command.startsWith('echo ')) {
           response = command.substring(5);
         } else if (command === 'ls') {
@@ -48,13 +47,13 @@ const Terminal = ({ initialText = 'Welcome to VSCode Cloud Terminal' }: Terminal
         } else if (command === 'pwd') {
           response = '/home/user/project';
         } else if (command === 'npm' || command === 'yarn' || command === 'pnpm' || command.startsWith('npm ') || command.startsWith('yarn ') || command.startsWith('pnpm ')) {
-          response = 'Package management commands require a full cloud development environment.\nPlease use the "Launch VS Code" button in the sidebar to access full terminal functionality.';
+          response = 'Package management commands require a full cloud development environment.\nPlease use the "Launch VS Code" button to access GitHub Codespaces or Gitpod with full terminal functionality.';
           toast({
             title: "Full terminal access required",
-            description: "Package management commands are available in the full cloud environment.",
+            description: "Package management commands are available in GitHub Codespaces or Gitpod.",
           });
         } else {
-          response = `Command not found: ${command}\nFor full terminal functionality, please launch a complete development environment.`;
+          response = `Command not found: ${command}\nFor full terminal functionality, please launch GitHub Codespaces or Gitpod.`;
         }
       }
       

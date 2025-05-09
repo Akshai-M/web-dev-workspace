@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
@@ -88,9 +87,8 @@ const Index = () => {
       description: "Launching your project with full terminal and extension support...",
     });
     
-    // For demo purposes, we'll open in a new tab
-    // This would typically call your backend or redirect to a proper cloud IDE service
-    window.open('https://vscode.dev/', '_blank');
+    // Updated to point to GitHub Codespaces URL
+    window.open('https://github.dev/codespaces', '_blank');
   };
 
   return (
