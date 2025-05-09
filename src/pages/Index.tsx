@@ -8,6 +8,7 @@ import Terminal from '@/components/Terminal';
 import TabBar from '@/components/TabBar';
 import sampleFiles, { FileItem } from '@/data/sampleFiles';
 import { cn } from '@/lib/utils';
+import { toast } from '@/hooks/use-toast';
 
 const Index = () => {
   const [sidebarView, setSidebarView] = useState('explorer');
@@ -74,6 +75,18 @@ const Index = () => {
     setIsTerminalVisible(prev => !prev);
   };
 
+  // Handle opening in Codespace
+  const handleOpenInCodespace = () => {
+    // In a real implementation, this would trigger an API call or redirect
+    toast({
+      title: "Opening project in GitHub Codespaces",
+      description: "You would be redirected to a full VS Code environment.",
+    });
+    
+    // For demo purposes, open in a new tab
+    window.open('https://github.com/features/codespaces', '_blank');
+  };
+
   return (
     <div className="flex flex-col h-screen bg-vscode-bg text-gray-300">
       {/* Top Navbar */}
@@ -85,7 +98,8 @@ const Index = () => {
           <Sidebar 
             activeView={sidebarView} 
             onViewChange={setSidebarView} 
-            isExpanded={isSidebarExpanded} 
+            isExpanded={isSidebarExpanded}
+            onOpenInCodespace={handleOpenInCodespace}
           />
           
           {/* File Explorer (only shown when sidebar is expanded and explorer is active) */}
@@ -104,7 +118,7 @@ const Index = () => {
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* Tab Bar */}
           <TabBar 
-            tabs={openTabs.map(tab => ({ id: tab.id, title: tab.name }))}
+            tabs={openTabs.map(tab => ({ id: tab.id, title: tab.name, language: tab.language }))}
             activeTabId={activeTabId}
             onTabSelect={handleTabSelect}
             onTabClose={handleTabClose}

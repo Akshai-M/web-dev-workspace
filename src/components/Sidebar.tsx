@@ -1,19 +1,21 @@
 
-import { FileText, FolderOpen, Search, GitBranch, Bug } from 'lucide-react';
+import { FileText, FolderOpen, Search, GitBranch, Bug, Code, Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface SidebarProps {
   activeView: string;
   onViewChange: (view: string) => void;
   isExpanded: boolean;
+  onOpenInCodespace?: () => void;
 }
 
-const Sidebar = ({ activeView, onViewChange, isExpanded }: SidebarProps) => {
+const Sidebar = ({ activeView, onViewChange, isExpanded, onOpenInCodespace }: SidebarProps) => {
   const sidebarItems = [
     { id: 'explorer', icon: <FileText size={24} />, title: 'Explorer' },
     { id: 'search', icon: <Search size={24} />, title: 'Search' },
     { id: 'git', icon: <GitBranch size={24} />, title: 'Source Control' },
     { id: 'debug', icon: <Bug size={24} />, title: 'Run and Debug' },
+    { id: 'codespace', icon: <Code size={24} />, title: 'Development Environments' },
   ];
   
   return (
@@ -39,8 +41,12 @@ const Sidebar = ({ activeView, onViewChange, isExpanded }: SidebarProps) => {
         
         <div className="flex-1"></div>
         
-        <button className="p-2 rounded hover:bg-gray-700 focus:outline-none">
+        <button className="p-2 rounded hover:bg-gray-700 focus:outline-none" title="Open Folder">
           <FolderOpen size={24} />
+        </button>
+        
+        <button className="p-2 rounded hover:bg-gray-700 focus:outline-none" title="Settings">
+          <Settings size={24} />
         </button>
       </div>
       
@@ -58,6 +64,20 @@ const Sidebar = ({ activeView, onViewChange, isExpanded }: SidebarProps) => {
           )}
           {activeView === 'debug' && (
             <div className="p-2 text-sm font-medium">RUN AND DEBUG</div>
+          )}
+          {activeView === 'codespace' && (
+            <div className="flex flex-col p-2">
+              <div className="text-sm font-medium mb-4">DEVELOPMENT ENVIRONMENTS</div>
+              <div className="bg-vscode-bg rounded p-3 mb-2 hover:bg-gray-700 cursor-pointer"
+                   onClick={onOpenInCodespace}>
+                <h3 className="text-sm font-medium mb-1">GitHub Codespaces</h3>
+                <p className="text-xs text-gray-400">Open this project in a full VS Code environment</p>
+              </div>
+              <div className="bg-vscode-bg rounded p-3 hover:bg-gray-700 cursor-pointer">
+                <h3 className="text-sm font-medium mb-1">Gitpod</h3>
+                <p className="text-xs text-gray-400">Launch a cloud development environment</p>
+              </div>
+            </div>
           )}
         </div>
       )}
