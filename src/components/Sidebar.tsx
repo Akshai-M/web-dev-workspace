@@ -2,6 +2,7 @@
 import { FileText, FolderOpen, Search, GitBranch, Bug, Code, Settings, ExternalLink } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { toast } from '@/hooks/use-toast';
 
 interface SidebarProps {
   activeView: string;
@@ -18,6 +19,16 @@ const Sidebar = ({ activeView, onViewChange, isExpanded, onOpenInCodespace }: Si
     { id: 'debug', icon: <Bug size={24} />, title: 'Run and Debug' },
     { id: 'codespace', icon: <Code size={24} />, title: 'Development Environments' },
   ];
+  
+  const handleOpenInVSCode = (platform: string) => {
+    if (onOpenInCodespace) {
+      toast({
+        title: `Launching in ${platform}`,
+        description: "Opening your project in a full cloud development environment...",
+      });
+      onOpenInCodespace();
+    }
+  };
   
   return (
     <div className="h-full bg-vscode-sidebar border-r border-gray-800 flex">
@@ -72,22 +83,23 @@ const Sidebar = ({ activeView, onViewChange, isExpanded, onOpenInCodespace }: Si
               
               <Button
                 className="w-full mb-4 bg-blue-600 hover:bg-blue-700 text-white"
-                onClick={onOpenInCodespace}
+                onClick={() => handleOpenInVSCode("GitHub Codespaces")}
                 variant="secondary"
               >
                 <Code className="mr-2" size={18} />
-                Launch VS Code
+                Launch Full VS Code
                 <ExternalLink className="ml-2" size={14} />
               </Button>
               
               <div className="bg-vscode-bg rounded p-3 mb-2 hover:bg-gray-700 cursor-pointer"
-                   onClick={onOpenInCodespace}>
+                   onClick={() => handleOpenInVSCode("GitHub Codespaces")}>
                 <h3 className="text-sm font-medium mb-1">GitHub Codespaces</h3>
-                <p className="text-xs text-gray-400">Open this project in a full VS Code environment</p>
+                <p className="text-xs text-gray-400">Full-featured VS Code with terminal and extensions</p>
               </div>
-              <div className="bg-vscode-bg rounded p-3 hover:bg-gray-700 cursor-pointer">
+              <div className="bg-vscode-bg rounded p-3 hover:bg-gray-700 cursor-pointer"
+                   onClick={() => handleOpenInVSCode("Gitpod")}>
                 <h3 className="text-sm font-medium mb-1">Gitpod</h3>
-                <p className="text-xs text-gray-400">Launch a cloud development environment</p>
+                <p className="text-xs text-gray-400">Cloud workspace with full terminal access</p>
               </div>
             </div>
           )}

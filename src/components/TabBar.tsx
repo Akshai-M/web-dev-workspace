@@ -11,7 +11,7 @@ interface TabBarProps {
 
 const TabBar = ({ tabs, activeTabId, onTabSelect, onTabClose }: TabBarProps) => {
   if (tabs.length === 0) {
-    return <div className="h-9 bg-vscode-bg border-b border-gray-800"></div>;
+    return <div className="h-9 bg-vscode-bg border-b border-gray-800 flex items-center px-3 text-xs text-gray-500">VS Code Cloud Development Environment</div>;
   }
 
   // Helper function to get file icon based on language
@@ -27,6 +27,11 @@ const TabBar = ({ tabs, activeTabId, onTabSelect, onTabClose }: TabBarProps) => 
       'json': 'json',
       'markdown': 'md',
       'python': 'py',
+      'go': 'go',
+      'rust': 'rs',
+      'java': 'java',
+      'c': 'c',
+      'cpp': 'cpp',
     };
     
     const icon = language ? iconMap[language] || language.substring(0, 3) : 'txt';

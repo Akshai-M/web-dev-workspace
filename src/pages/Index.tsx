@@ -10,7 +10,7 @@ import sampleFiles, { FileItem } from '@/data/sampleFiles';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
-import { Code } from 'lucide-react';
+import { Code, ExternalLink } from 'lucide-react';
 
 const Index = () => {
   const [sidebarView, setSidebarView] = useState('explorer');
@@ -84,12 +84,12 @@ const Index = () => {
   // Handle opening in VS Code CDE
   const handleOpenInVSCodeCDE = () => {
     toast({
-      title: "Opening VS Code Cloud Development Environment",
-      description: "Launching your project in VS Code CDE...",
+      title: "Opening Full Cloud Development Environment",
+      description: "Launching your project with full terminal and extension support...",
     });
     
     // For demo purposes, we'll open in a new tab
-    // This would typically call your backend or redirect to a VS Code CDE service
+    // This would typically call your backend or redirect to a proper cloud IDE service
     window.open('https://vscode.dev/', '_blank');
   };
 
@@ -142,20 +142,32 @@ const Index = () => {
               <div className="h-full flex items-center justify-center flex-col text-gray-300">
                 {showWelcomeScreen && (
                   <div className="max-w-md text-center p-6 bg-vscode-active-tab rounded-lg shadow-lg">
-                    <h1 className="text-2xl font-bold mb-4">Welcome to VS Code Cloud</h1>
-                    <p className="mb-6 text-gray-400">Launch a full VS Code development environment for your project in the cloud</p>
+                    <h1 className="text-2xl font-bold mb-4">Cloud Development Environment</h1>
+                    <p className="mb-6 text-gray-400">Launch a full VS Code environment with terminal access, extensions, and Git integration</p>
                     
                     <Button 
                       onClick={handleOpenInVSCodeCDE}
                       size="lg"
-                      className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors"
+                      className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors mb-4"
                     >
                       <Code size={20} />
-                      Get Started with VS Code
+                      Launch Full VS Code
+                      <ExternalLink size={16} className="ml-1" />
                     </Button>
                     
+                    <div className="flex justify-between mt-6">
+                      <div className="text-left">
+                        <h3 className="text-sm font-medium mb-1">GitHub Codespaces</h3>
+                        <p className="text-xs text-gray-500">Complete development environment</p>
+                      </div>
+                      <div className="text-left">
+                        <h3 className="text-sm font-medium mb-1">Gitpod</h3>
+                        <p className="text-xs text-gray-500">Cloud workspace</p>
+                      </div>
+                    </div>
+                    
                     <p className="mt-4 text-xs text-gray-500">
-                      Your development environment will open in a new browser tab
+                      Your development environment will open with full terminal access and extension support
                     </p>
                   </div>
                 )}
@@ -166,7 +178,7 @@ const Index = () => {
           {/* Terminal Panel */}
           {isTerminalVisible && (
             <div className="h-1/3 border-t border-gray-800">
-              <Terminal initialText="Welcome to VSCode Cloud Terminal" />
+              <Terminal initialText="Welcome to VS Code Cloud Terminal (Demo)" />
             </div>
           )}
         </div>

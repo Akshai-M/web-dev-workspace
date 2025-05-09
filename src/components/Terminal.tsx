@@ -1,12 +1,17 @@
 
 import { useState, useEffect, useRef } from 'react';
+import { toast } from '@/hooks/use-toast';
 
 interface TerminalProps {
   initialText?: string;
 }
 
 const Terminal = ({ initialText = 'Welcome to VSCode Cloud Terminal' }: TerminalProps) => {
-  const [history, setHistory] = useState<string[]>([initialText]);
+  const [history, setHistory] = useState<string[]>([
+    initialText,
+    'NOTE: For full terminal functionality, please use the "Launch VS Code" button in the sidebar.',
+    'This will open a complete cloud development environment with terminal access.'
+  ]);
   const [input, setInput] = useState('');
   const [prompt, setPrompt] = useState('$ ');
   const terminalRef = useRef<HTMLDivElement>(null);
@@ -28,19 +33,28 @@ const Terminal = ({ initialText = 'Welcome to VSCode Cloud Terminal' }: Terminal
       
       if (command) {
         if (command === 'clear') {
-          setHistory([]);
+          setHistory([
+            'Terminal cleared.',
+            'NOTE: For full terminal functionality, please use the "Launch VS Code" button.'
+          ]);
           setInput('');
           return;
         } else if (command === 'help') {
-          response = 'Available commands: help, clear, echo, ls, pwd';
+          response = 'Available commands: help, clear, echo, ls, pwd\n\nFor full terminal functionality, launch a complete development environment.';
         } else if (command.startsWith('echo ')) {
           response = command.substring(5);
         } else if (command === 'ls') {
           response = 'index.html\nstyle.css\nscript.js\npackage.json';
         } else if (command === 'pwd') {
           response = '/home/user/project';
+        } else if (command === 'npm' || command === 'yarn' || command === 'pnpm' || command.startsWith('npm ') || command.startsWith('yarn ') || command.startsWith('pnpm ')) {
+          response = 'Package management commands require a full cloud development environment.\nPlease use the "Launch VS Code" button in the sidebar to access full terminal functionality.';
+          toast({
+            title: "Full terminal access required",
+            description: "Package management commands are available in the full cloud environment.",
+          });
         } else {
-          response = `Command not found: ${command}`;
+          response = `Command not found: ${command}\nFor full terminal functionality, please launch a complete development environment.`;
         }
       }
       
