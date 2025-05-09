@@ -9,6 +9,8 @@ import TabBar from '@/components/TabBar';
 import sampleFiles, { FileItem } from '@/data/sampleFiles';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
+import { Button } from '@/components/ui/button';
+import { Code } from 'lucide-react';
 
 const Index = () => {
   const [sidebarView, setSidebarView] = useState('explorer');
@@ -18,6 +20,7 @@ const Index = () => {
   const [openTabs, setOpenTabs] = useState<FileItem[]>([]);
   const [activeTabId, setActiveTabId] = useState<string | null>(null);
   const [fileContents, setFileContents] = useState<Record<string, string>>({});
+  const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
 
   // Handle file selection
   const handleFileSelect = (file: FileItem) => {
@@ -29,6 +32,7 @@ const Index = () => {
     }
     
     setActiveTabId(file.id);
+    setShowWelcomeScreen(false);
   };
 
   // Handle tab selection
@@ -36,6 +40,7 @@ const Index = () => {
     setActiveTabId(tabId);
     const file = openTabs.find(tab => tab.id === tabId) || null;
     setSelectedFile(file);
+    setShowWelcomeScreen(false);
   };
 
   // Handle tab close
@@ -51,6 +56,7 @@ const Index = () => {
       } else {
         setActiveTabId(null);
         setSelectedFile(null);
+        setShowWelcomeScreen(true);
       }
     }
   };
@@ -75,16 +81,16 @@ const Index = () => {
     setIsTerminalVisible(prev => !prev);
   };
 
-  // Handle opening in Codespace
-  const handleOpenInCodespace = () => {
-    // In a real implementation, this would trigger an API call or redirect
+  // Handle opening in VS Code CDE
+  const handleOpenInVSCodeCDE = () => {
     toast({
-      title: "Opening project in GitHub Codespaces",
-      description: "You would be redirected to a full VS Code environment.",
+      title: "Opening VS Code Cloud Development Environment",
+      description: "Launching your project in VS Code CDE...",
     });
     
-    // For demo purposes, open in a new tab
-    window.open('https://github.com/features/codespaces', '_blank');
+    // For demo purposes, we'll open in a new tab
+    // This would typically call your backend or redirect to a VS Code CDE service
+    window.open('https://vscode.dev/', '_blank');
   };
 
   return (
@@ -99,7 +105,7 @@ const Index = () => {
             activeView={sidebarView} 
             onViewChange={setSidebarView} 
             isExpanded={isSidebarExpanded}
-            onOpenInCodespace={handleOpenInCodespace}
+            onOpenInCodespace={handleOpenInVSCodeCDE}
           />
           
           {/* File Explorer (only shown when sidebar is expanded and explorer is active) */}
@@ -124,7 +130,7 @@ const Index = () => {
             onTabClose={handleTabClose}
           />
           
-          {/* Editor Content */}
+          {/* Editor Content or Welcome Screen */}
           <div className="flex-1 overflow-hidden">
             {selectedFile ? (
               <CodeEditor 
@@ -133,9 +139,26 @@ const Index = () => {
                 onChange={handleCodeChange}
               />
             ) : (
-              <div className="h-full flex items-center justify-center flex-col text-gray-500">
-                <p className="text-xl mb-2">Welcome to VSCode Cloud</p>
-                <p className="text-sm">Select a file to start editing</p>
+              <div className="h-full flex items-center justify-center flex-col text-gray-300">
+                {showWelcomeScreen && (
+                  <div className="max-w-md text-center p-6 bg-vscode-active-tab rounded-lg shadow-lg">
+                    <h1 className="text-2xl font-bold mb-4">Welcome to VS Code Cloud</h1>
+                    <p className="mb-6 text-gray-400">Launch a full VS Code development environment for your project in the cloud</p>
+                    
+                    <Button 
+                      onClick={handleOpenInVSCodeCDE}
+                      size="lg"
+                      className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md transition-colors"
+                    >
+                      <Code size={20} />
+                      Get Started with VS Code
+                    </Button>
+                    
+                    <p className="mt-4 text-xs text-gray-500">
+                      Your development environment will open in a new browser tab
+                    </p>
+                  </div>
+                )}
               </div>
             )}
           </div>

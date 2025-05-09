@@ -16,27 +16,40 @@ const TabBar = ({ tabs, activeTabId, onTabSelect, onTabClose }: TabBarProps) => 
 
   // Helper function to get file icon based on language
   const getFileIcon = (language?: string) => {
-    // In a real implementation, you'd have more icons for different file types
-    return <span className="text-xs mr-1.5 opacity-70">{language || 'txt'}</span>;
+    // Map of languages to their icons
+    const iconMap: Record<string, string> = {
+      'javascript': 'js',
+      'typescript': 'ts',
+      'jsx': 'jsx',
+      'tsx': 'tsx',
+      'html': 'html',
+      'css': 'css',
+      'json': 'json',
+      'markdown': 'md',
+      'python': 'py',
+    };
+    
+    const icon = language ? iconMap[language] || language.substring(0, 3) : 'txt';
+    return <span className="text-xs mr-1.5 opacity-70">{icon}</span>;
   };
 
   return (
-    <div className="flex h-9 bg-vscode-bg border-b border-gray-800 overflow-x-auto">
+    <div className="flex h-9 bg-vscode-bg border-b border-gray-800 overflow-x-auto scrollbar-thin">
       {tabs.map((tab) => {
         const isActive = tab.id === activeTabId;
         return (
           <div
             key={tab.id}
             className={cn(
-              "flex items-center px-3 border-r border-gray-800 min-w-[120px] max-w-[200px] cursor-pointer",
-              isActive ? "bg-vscode-active-tab" : "bg-vscode-inactive-tab"
+              "flex items-center px-3 border-r border-gray-800 min-w-[120px] max-w-[200px] cursor-pointer transition-colors",
+              isActive ? "bg-vscode-active-tab" : "bg-vscode-inactive-tab hover:bg-gray-700"
             )}
             onClick={() => onTabSelect(tab.id)}
           >
             {getFileIcon(tab.language)}
             <span className="truncate text-sm flex-1">{tab.title}</span>
             <button
-              className="ml-2 p-1 rounded-sm hover:bg-gray-700 focus:outline-none"
+              className="ml-2 p-1 rounded-sm opacity-60 hover:opacity-100 hover:bg-gray-700 focus:outline-none"
               onClick={(e) => {
                 e.stopPropagation();
                 onTabClose(tab.id);

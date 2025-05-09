@@ -1,6 +1,7 @@
 
-import { FileText, FolderOpen, Search, GitBranch, Bug, Code, Settings } from 'lucide-react';
+import { FileText, FolderOpen, Search, GitBranch, Bug, Code, Settings, ExternalLink } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 interface SidebarProps {
   activeView: string;
@@ -68,6 +69,17 @@ const Sidebar = ({ activeView, onViewChange, isExpanded, onOpenInCodespace }: Si
           {activeView === 'codespace' && (
             <div className="flex flex-col p-2">
               <div className="text-sm font-medium mb-4">DEVELOPMENT ENVIRONMENTS</div>
+              
+              <Button
+                className="w-full mb-4 bg-blue-600 hover:bg-blue-700 text-white"
+                onClick={onOpenInCodespace}
+                variant="secondary"
+              >
+                <Code className="mr-2" size={18} />
+                Launch VS Code
+                <ExternalLink className="ml-2" size={14} />
+              </Button>
+              
               <div className="bg-vscode-bg rounded p-3 mb-2 hover:bg-gray-700 cursor-pointer"
                    onClick={onOpenInCodespace}>
                 <h3 className="text-sm font-medium mb-1">GitHub Codespaces</h3>
